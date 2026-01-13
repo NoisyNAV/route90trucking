@@ -3,210 +3,582 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Route90 Trucking Inc. | Winnipeg, MB</title>
-  <meta name="description" content="Owner-operator trucking in Winnipeg, MB. Fleet overflow, power-only, JIT, dedicated lanes, and local/last-mile delivery. Precision in Every Mile." />
-  <meta name="theme-color" content="#0b1220" />
+  <title>Route90 Trucking Inc. | Precision in Every Mile</title>
+  <meta name="description" content="Winnipeg-based owner-operator trucking support: fleet overflow, power-only, JIT, dedicated lanes, and local/last-mile & heavy moving." />
 
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <script defer src="assets/js/main.js"></script>
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1224;
+      --card:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68);
+
+      --brand:#49A6FF;
+      --brand2:#7BD1FF;
+
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --shadow2:0 10px 30px rgba(0,0,0,.32);
+
+      --r14:14px;
+      --r18:18px;
+      --r24:24px;
+
+      --container:1120px;
+      --pad: clamp(14px, 2vw, 20px);
+    }
+
+    *{box-sizing:border-box}
+    html{ -webkit-text-size-adjust:100% }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% -10%, rgba(73,166,255,.24), transparent 55%),
+        radial-gradient(800px 460px at 85% 0%, rgba(123,209,255,.16), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 65%, #05070c);
+      overflow-x:hidden;
+    }
+
+    img, svg, video, canvas{ display:block; max-width:100%; height:auto; }
+
+    a{color:inherit; text-decoration:none}
+    a:hover{opacity:.95}
+    small{color:var(--muted)}
+
+    .container{
+      width:min(var(--container), 100%);
+      margin-inline:auto;
+      padding-inline:var(--pad);
+    }
+
+    /* Skip link */
+    .skip{
+      position:absolute; left:-9999px; top:auto;
+      width:1px; height:1px; overflow:hidden;
+    }
+    .skip:focus{
+      left:var(--pad); top:var(--pad);
+      width:auto; height:auto;
+      padding:10px 14px;
+      background:#0f172a;
+      border:1px solid var(--border);
+      border-radius:var(--r14);
+      z-index:9999;
+    }
+
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(8,10,16,.55);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .header__row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding: 14px 0;
+    }
+
+    .brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+    .brand__logo{
+      width:42px; height:42px;
+      border-radius:12px;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+    }
+    .brand__name{ font-weight:900; letter-spacing:.2px; line-height:1.1; font-size:15.5px; }
+    .brand__tag{ margin-top:3px; color:var(--muted); font-size:12.5px; line-height:1.2; }
+
+    .nav{ display:flex; align-items:center; }
+    .nav__list{ display:flex; gap:10px; list-style:none; margin:0; padding:0; }
+    .nav__link{
+      display:inline-flex; align-items:center;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:800;
+      font-size:13.5px;
+      color:rgba(255,255,255,.86);
+    }
+    .nav__link:hover{ background: rgba(255,255,255,.06); }
+    .nav__link.is-active{
+      background: rgba(73,166,255,.14);
+      border:1px solid rgba(73,166,255,.28);
+    }
+    .nav__cta{
+      background: rgba(73,166,255,.18);
+      border:1px solid rgba(73,166,255,.35);
+    }
+    .nav__cta:hover{ background: rgba(73,166,255,.22); }
+
+    /* Burger */
+    .burger{
+      display:none;
+      width:44px; height:44px;
+      border-radius:14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      cursor:pointer;
+      padding:10px;
+    }
+    .burger span{
+      display:block;
+      height:2px;
+      margin:6px 0;
+      background: rgba(255,255,255,.92);
+      border-radius:99px;
+    }
+
+    /* Drawer */
+    .drawer{ display:none; }
+    .drawer.is-open{ display:block; }
+    .drawer__backdrop{
+      position:fixed; inset:0; z-index:80;
+      background: rgba(0,0,0,.56);
+    }
+    .drawer__panel{
+      position:fixed; right:12px; top:12px; z-index:90;
+      width:min(420px, calc(100% - 24px));
+      border-radius:var(--r24);
+      background: rgba(10,12,18,.92);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .drawer__top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .drawer__title{ font-weight:900; letter-spacing:.2px; }
+    .drawer__close{
+      width:40px; height:40px;
+      border-radius:14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .drawer__link{
+      display:block;
+      margin-top:8px;
+      padding:12px 12px;
+      border-radius:14px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:900;
+    }
+    .drawer__link.is-active{
+      background: rgba(73,166,255,.14);
+      border-color: rgba(73,166,255,.28);
+    }
+    .drawer__cta{
+      background: rgba(73,166,255,.18);
+      border-color: rgba(73,166,255,.35);
+    }
+    .drawer__meta{
+      margin-top:14px; padding-top:12px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.65;
+    }
+    .drawer__meta a{ color: var(--brand2); }
+
+    /* Typography */
+    h1,h2,h3{margin:0; letter-spacing:-.3px}
+    p{margin:0; color:var(--muted); line-height:1.75}
+    .h1{ font-size: clamp(34px, 5vw, 58px); line-height:1.04; }
+    .h2{ font-size: clamp(24px, 3.1vw, 40px); line-height:1.12; }
+    .lead{ font-size: clamp(15.5px, 1.7vw, 18px); max-width: 65ch; }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900; font-size:14px; letter-spacing:.15px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn--primary{
+      background: linear-gradient(180deg, rgba(73,166,255,.96), rgba(73,166,255,.62));
+      border-color: rgba(73,166,255,.35);
+      color:#07121c;
+    }
+    .btn--ghost{
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+    }
+    .btn--ghost:hover{ background: rgba(255,255,255,.085); }
+    .actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+
+    /* Sections */
+    .hero{ padding: clamp(46px, 6.5vw, 86px) 0; }
+    .hero__grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 24px;
+      align-items:start;
+    }
+    .kicker{
+      display:inline-flex;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.25px;
+      color: rgba(255,255,255,.84);
+    }
+
+    .frame{
+      border-radius: var(--r24);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+      aspect-ratio: 16/11;
+    }
+    .frame img{ width:100%; height:100%; object-fit:cover; }
+
+    .badges{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:10px;
+    }
+    .badge{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .badge__label{ color:rgba(255,255,255,.55); font-size:12px; }
+    .badge__value{ margin-top:4px; font-weight:900; font-size:13.5px; }
+
+    .trust{ margin-top:12px; display:grid; gap:10px; }
+    .trust__item{
+      display:flex; gap:10px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      line-height:1.6;
+      font-size:13.5px;
+    }
+    .dot{ width:10px; height:10px; border-radius:99px; background: rgba(73,166,255,.95); margin-top:4px; }
+
+    .section{ padding: clamp(44px, 6vw, 78px) 0; }
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card{
+      border-radius: var(--r24);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,.24);
+      overflow:hidden;
+    }
+    .card .frame{ aspect-ratio: 16/10; border:none; border-radius:0; box-shadow:none; }
+    .card__body{ padding:16px 16px 18px; }
+    .card__title{ font-size: 18px; font-weight: 900; }
+    .card__text{ margin-top:8px; font-size: 14.8px; }
+
+    .cta{
+      padding: 34px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(73,166,255,.12), rgba(255,255,255,.02));
+    }
+    .cta__row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .footer{
+      padding: 34px 0 18px;
+      background: rgba(0,0,0,.20);
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .footer__grid{
+      display:grid;
+      grid-template-columns: 1.2fr .7fr .9fr;
+      gap:18px;
+    }
+    .footer__name{ font-weight: 900; letter-spacing:.2px; }
+    .footer__tag{ margin-top:6px; color:var(--muted); line-height:1.6; }
+    .footer__head{ font-weight: 900; margin-bottom:10px; }
+    .footer a{ color: rgba(255,255,255,.82); display:block; margin-top:8px; }
+    .footer a:hover{ color: var(--brand2); }
+    .footer__bottom{
+      margin-top:18px;
+      padding-top:14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color: rgba(255,255,255,.72);
+      font-size:13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .nav{ display:none; }
+      .burger{ display:inline-flex; align-items:center; justify-content:center; }
+      .hero__grid{ grid-template-columns: 1fr; }
+      .badges{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      .footer__grid{ grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px){
+      .btn{ width:100%; max-width: 560px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html" aria-label="Route90 Trucking home">
-        <span class="brand-mark" aria-hidden="true">R90</span>
-        <span class="brand-text">
-          <strong>Route90</strong>
-          <span>Trucking Inc.</span>
-        </span>
+  <header class="header">
+    <div class="container header__row">
+      <a class="brand" href="index.html" aria-label="Route90 home">
+        <img class="brand__logo" src="assets/images/logo.png" alt="Route90 logo" data-fallback />
+        <div>
+          <div class="brand__name">Route90 Trucking Inc.</div>
+          <div class="brand__tag">Winnipeg, MB • Owner-Operator</div>
+        </div>
       </a>
 
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <span class="sr-only">Open menu</span>
-        <span class="nav-toggle-bars" aria-hidden="true"></span>
-      </button>
-
-      <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="services.html">Services</a>
-        <a class="nav-link" href="contact.html">Contact</a>
-        <a class="btn btn-primary nav-cta" href="contact.html#quote">Request a Quote</a>
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link is-active" href="index.html">Home</a></li>
+          <li><a class="nav__link" href="services.html">Services</a></li>
+          <li><a class="nav__link" href="about.html">About</a></li>
+          <li><a class="nav__link nav__cta" href="contact.html">Get a Quote</a></li>
+        </ul>
       </nav>
+
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" data-open-drawer>
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
+  <!-- Mobile Drawer -->
+  <div class="drawer" data-drawer>
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer__top">
+        <div class="drawer__title">Menu</div>
+        <button class="drawer__close" type="button" aria-label="Close" data-close-drawer>✕</button>
+      </div>
+
+      <a class="drawer__link is-active" href="index.html">Home</a>
+      <a class="drawer__link" href="services.html">Services</a>
+      <a class="drawer__link" href="about.html">About</a>
+      <a class="drawer__link drawer__cta" href="contact.html">Get a Quote</a>
+
+      <div class="drawer__meta">
+        <div><strong>Phone:</strong> <a href="tel:+16478079190">647-807-9190</a></div>
+        <div><strong>Email:</strong> <a href="mailto:route90trucking@gmail.com">route90trucking@gmail.com</a></div>
+        <div><strong>Base:</strong> Winnipeg, Manitoba</div>
+      </div>
+    </div>
+    <div class="drawer__backdrop" data-close-drawer></div>
+  </div>
+
   <main id="main">
     <!-- HERO -->
-    <section class="hero has-map-bg">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="kicker">
-            <span class="pill">Winnipeg, MB</span>
-            <span class="pill pill-outline">Owner-Operator</span>
-          </div>
-
-          <h1>Precision in Every Mile.</h1>
-          <p class="lead">
-            Route90 Trucking Inc. provides dependable, professional capacity —
-            <strong>an extension of your fleet</strong> for power-only, overflow, and time-critical deliveries.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="contact.html#quote">Request a Quote</a>
-            <a class="btn btn-ghost" href="services.html">View Services</a>
-          </div>
-
-          <ul class="trust-row" aria-label="Highlights">
-            <li>
-              <span class="trust-title">Fleet Overflow</span>
-              <span class="trust-sub">On-demand capacity</span>
-            </li>
-            <li>
-              <span class="trust-title">Power-Only</span>
-              <span class="trust-sub">You provide the trailer</span>
-            </li>
-            <li>
-              <span class="trust-title">Just-In-Time</span>
-              <span class="trust-sub">Tight windows supported</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="hero-media">
-          <div class="hero-image" aria-label="Hero image">
-            <img
-              src="assets/images/hero-truck.jpg"
-              alt="Truck on highway"
-              loading="lazy"
-              onerror="this.closest('.hero-image').classList.add('no-img'); this.remove();"
-            />
-          </div>
-
-          <div class="hero-card">
-            <div class="hero-card-top">
-              <span class="dot"></span>
-              <span>Available for dedicated lanes & overflow runs</span>
-            </div>
-
-            <div class="hero-card-grid">
-              <div>
-                <div class="meta-label">Phone</div>
-                <a class="meta-value" href="tel:+16478079190">647-807-9190</a>
-              </div>
-              <div>
-                <div class="meta-label">Email</div>
-                <a class="meta-value" href="mailto:route90trucking@gmail.com">route90trucking@gmail.com</a>
-              </div>
-              <div>
-                <div class="meta-label">Location</div>
-                <div class="meta-value">Winnipeg, MB</div>
-              </div>
-              <div>
-                <div class="meta-label">Focus</div>
-                <div class="meta-value">Safe, on-time delivery</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES PREVIEW -->
-    <section class="section">
-      <div class="container section-head">
-        <h2>Services</h2>
-        <p>Clear offerings — built for real fleet support, not corporate fluff.</p>
-      </div>
-
-      <div class="container grid cards">
-        <article class="card">
-          <div class="card-icon" aria-hidden="true">↗</div>
-          <h3>Fleet Overflow</h3>
-          <p>Extra capacity during spikes — executed under your authority.</p>
-        </article>
-
-        <article class="card">
-          <div class="card-icon" aria-hidden="true">⛟</div>
-          <h3>Power-Only</h3>
-          <p>You supply the trailer. I supply the tractor and execution.</p>
-        </article>
-
-        <article class="card">
-          <div class="card-icon" aria-hidden="true">⏱</div>
-          <h3>Just-In-Time (JIT)</h3>
-          <p>Time-critical moves with clean communication and handoffs.</p>
-        </article>
-      </div>
-
-      <div class="container section-foot">
-        <a class="btn btn-ghost" href="services.html">See all services</a>
-      </div>
-    </section>
-
-    <!-- HOW I WORK -->
-    <section class="section section-dark">
-      <div class="container grid two-col">
+    <section class="hero">
+      <div class="container hero__grid">
         <div>
-          <h2>How I work</h2>
-          <p class="lead">
-            Simple: consistent execution, clear updates, clean paperwork, and professional representation.
+          <div class="kicker">Extension of Your Fleet</div>
+          <h1 class="h1" style="margin-top:14px">Precision in Every Mile.</h1>
+          <p class="lead" style="margin-top:10px">
+            Owner-operator execution built for dispatchers who need capacity that shows up, communicates, and delivers clean.
           </p>
+
+          <div class="actions">
+            <a class="btn btn--primary" href="contact.html">Request Availability</a>
+            <a class="btn btn--ghost" href="services.html">View Services</a>
+          </div>
+
+          <div class="badges">
+            <div class="badge">
+              <div class="badge__label">Base</div>
+              <div class="badge__value">Winnipeg, MB</div>
+            </div>
+            <div class="badge">
+              <div class="badge__label">Model</div>
+              <div class="badge__value">Owner-Operator</div>
+            </div>
+            <div class="badge">
+              <div class="badge__label">Standard</div>
+              <div class="badge__value">Safety + Updates</div>
+            </div>
+          </div>
         </div>
 
-        <div class="stack">
-          <div class="mini">
-            <h3>Direct communication</h3>
-            <p>Status updates that actually help dispatch and planning.</p>
+        <div>
+          <div class="frame">
+            <img src="assets/images/hero.jpg" alt="Route90 truck on highway" data-fallback />
           </div>
-          <div class="mini">
-            <h3>Premium standard</h3>
-            <p>I represent your operation like it’s my own.</p>
+
+          <div class="trust">
+            <div class="trust__item"><span class="dot"></span><div><strong>Fast responses</strong> and clear ETAs.</div></div>
+            <div class="trust__item"><span class="dot"></span><div><strong>Clean paperwork</strong> and POD first time.</div></div>
+            <div class="trust__item"><span class="dot"></span><div><strong>Professional delivery</strong> — no surprises.</div></div>
           </div>
-          <div class="mini">
-            <h3>Safety-first</h3>
-            <p>No shortcuts. Reliability is the product.</p>
-          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section">
+      <div class="container">
+        <h2 class="h2">Services Built for Real Operations</h2>
+        <p class="lead" style="margin-top:10px">Capacity support that’s simple, direct, and dependable.</p>
+
+        <div class="grid">
+          <article class="card">
+            <div class="frame"><img src="assets/images/fleet.jpg" alt="Fleet overflow service" data-fallback /></div>
+            <div class="card__body">
+              <div class="card__title">Fleet Overflow</div>
+              <p class="card__text">Run under your authority when you need extra capacity — executed clean.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="frame"><img src="assets/images/power.jpg" alt="Power-only service" data-fallback /></div>
+            <div class="card__body">
+              <div class="card__title">Power-Only</div>
+              <p class="card__text">You provide the trailer, I provide the tractor and execution.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="frame"><img src="assets/images/jit.jpg" alt="Just-in-time service" data-fallback /></div>
+            <div class="card__body">
+              <div class="card__title">Just-In-Time (JIT)</div>
+              <p class="card__text">Time-critical runs with proactive check-ins and updates.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="section">
-      <div class="container cta">
-        <div class="cta-copy">
-          <h2>Need an extension of your fleet?</h2>
-          <p>Send lane + schedule + trailer type — I’ll respond fast.</p>
+    <section class="cta">
+      <div class="container cta__row">
+        <div>
+          <h2 class="h2">Need overflow capacity or power-only support?</h2>
+          <p class="lead" style="margin-top:8px">Send lane details and timing — I’ll confirm availability quickly.</p>
         </div>
-        <div class="cta-actions">
-          <a class="btn btn-primary" href="contact.html#quote">Request a Quote</a>
-          <a class="btn btn-ghost" href="tel:+16478079190">Call Now</a>
+        <div class="actions" style="margin-top:0">
+          <a class="btn btn--primary" href="contact.html">Get a Quote</a>
+          <a class="btn btn--ghost" href="tel:+16478079190">Call 647-807-9190</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-grid">
+  <footer class="footer">
+    <div class="container footer__grid">
       <div>
-        <div class="footer-brand">Route90 Trucking Inc.</div>
-        <div class="footer-muted">Winnipeg, MB, Canada</div>
-        <div class="footer-muted">Precision in Every Mile.</div>
+        <div class="footer__name">Route90 Trucking Inc.</div>
+        <div class="footer__tag">Precision in Every Mile • Winnipeg, MB</div>
       </div>
-      <div class="footer-links">
+      <div>
+        <div class="footer__head">Pages</div>
         <a href="services.html">Services</a>
+        <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
       </div>
-      <div class="footer-contact">
+      <div>
+        <div class="footer__head">Contact</div>
         <a href="mailto:route90trucking@gmail.com">route90trucking@gmail.com</a>
         <a href="tel:+16478079190">647-807-9190</a>
+        <small>Winnipeg, Manitoba, Canada</small>
       </div>
     </div>
-    <div class="container footer-bottom">
-      <span>© <span id="year"></span> Route90 Trucking Inc.</span>
+
+    <div class="container footer__bottom">
+      <div>© <span id="year"></span> Route90 Trucking Inc.</div>
+      <div>Owner-Operator / Subcontractor</div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      // Year
+      const y = document.getElementById("year");
+      if (y) y.textContent = String(new Date().getFullYear());
+
+      // Drawer
+      const drawer = document.querySelector("[data-drawer]");
+      const openBtn = document.querySelector("[data-open-drawer]");
+      const closeBtns = document.querySelectorAll("[data-close-drawer]");
+
+      function openDrawer() {
+        if (!drawer || !openBtn) return;
+        drawer.classList.add("is-open");
+        openBtn.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+      }
+      function closeDrawer() {
+        if (!drawer || !openBtn) return;
+        drawer.classList.remove("is-open");
+        openBtn.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      }
+
+      if (openBtn) openBtn.addEventListener("click", openDrawer);
+      closeBtns.forEach(btn => btn.addEventListener("click", closeDrawer));
+      window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
+
+      // Image fallback (prevents empty broken images)
+      const fallbackSvg = encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0" stop-color="#0b1224"/>
+              <stop offset="1" stop-color="#070a12"/>
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#g)"/>
+          <circle cx="240" cy="160" r="150" fill="rgba(73,166,255,.25)"/>
+          <circle cx="980" cy="120" r="190" fill="rgba(123,209,255,.18)"/>
+          <text x="70" y="720" fill="rgba(255,255,255,.78)" font-family="Arial" font-size="52" font-weight="700">
+            Route90 Trucking Inc.
+          </text>
+          <text x="70" y="770" fill="rgba(255,255,255,.56)" font-family="Arial" font-size="28">
+            Image missing — fix path in assets/images/
+          </text>
+        </svg>
+      `);
+
+      document.querySelectorAll("img[data-fallback]").forEach(img => {
+        img.addEventListener("error", () => {
+          img.src = `data:image/svg+xml;charset=utf-8,${fallbackSvg}`;
+        }, { once: true });
+      });
+    })();
+  </script>
 </body>
 </html>
